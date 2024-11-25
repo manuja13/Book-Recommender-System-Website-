@@ -1,0 +1,144 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: white;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 2.8em;
+    color: #2d2d2d;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
+}
+
+.content-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+label {
+    font-size: 1.2em;
+    color: #333;
+    margin-right: 10px;
+    font-weight: 600;
+}
+
+select, input[type="text"], button {
+    padding: 12px 15px;
+    font-size: 1.1em;
+    margin: 15px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    box-shadow: none;
+}
+
+select {
+    background-color: #fff;
+    width: 220px;
+}
+
+input[type="text"] {
+    width: calc(100% - 30px);
+    max-width: 600px;
+    border: 1px solid #cccccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+button:hover {
+    background-color: #357ab7;
+}
+
+/* Autocomplete Suggestions Styling */
+.autocomplete-suggestions {
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: white;
+    z-index: 1000;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+.autocomplete-suggestions div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.autocomplete-suggestions div:hover {
+    background-color: #f7f7f7;
+}
+
+/* Styling for fetched YouTube videos */
+#videos {
+    margin-top: 30px;
+}
+
+#videos div {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+#videos div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+}
+
+#videos img {
+    max-width: 220px;
+    margin-right: 20px;
+    border-radius: 8px;
+}
+
+#videos h3 {
+    font-size: 1.4em;
+    margin: 0;
+    color: #333;
+    font-weight: 600;
+}
+
+#videos a {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+#videos a:hover {
+    color: #357ab7;
+}
+
+/* Clearfix to fix float issues */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

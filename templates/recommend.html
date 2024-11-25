@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recommend.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <!-- Include the Navbar -->
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+    <center>
+        <h1 class="text-white" style="font-size:36px; margin-bottom: 20px;">Recommendations</h1>
+    </center>
+    <center>
+        <form action="/recommend_books" method="post" autocomplete="off" style="max-width: 600px; margin: 0 auto;">
+            <input name="user_input" id="book-input" type="text" class="form-control" placeholder="Type a Book Name" style="font-size:16px; padding: 10px; border-radius: 20px; margin-bottom: 10px;">
+            <div id="autocomplete-list" class="autocomplete-suggestions"></div>
+            <input type="submit" value="Submit" class="btn btn-lg btn-primary" style="background-color: rgb(33, 131, 184); color: #fff; border-color: rgb(33, 131, 184); font-size: 18px; padding: 6px 20px; border-radius: 30px; margin-top:10px; width: 200px;display: block; margin-left: auto; margin-right: auto;">
+        </form>
+    </center>
+</div>
+            {% if message %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% endif %}
+            {% if data %}
+                {% for book in data %}
+                    <div class="col-md-3" style="margin-top:50px">
+                        <div class="card">
+                            <div class="card-body">
+                            <center><img class="card-img-top" src="{{ book[2] }}" alt="Book Cover" style="width: 150px; height: auto;"></center>
+                                <p class="text-white">{{ book[0] }}</p>
+                                <h4 class="text-white">{{ book[1] }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#book-input").on('input', function() {
+                var query = $(this).val();
+                if (query.length > 2) {
+                    $.ajax({
+                        url: '/autocomplete',
+                        data: {q: query},
+                        success: function(data) {
+                            let autocompleteList = $('#autocomplete-list');
+                            autocompleteList.empty();
+                            if (data.length > 0) {
+                                data.forEach(function(item) {
+                                    autocompleteList.append('<div class="autocomplete-suggestion">' + item + '</div>');
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+
+            $(document).on('click', '.autocomplete-suggestion', function() {
+                var value = $(this).text();
+                $('#book-input').val(value);
+                $('#autocomplete-list').empty();
+            });
+        });
+    </script>
+
+</body>
+</html>

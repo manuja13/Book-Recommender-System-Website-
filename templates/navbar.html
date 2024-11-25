@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookMate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/home">
+        <img src="{{ url_for('static', filename='assets/applogo.png') }}" alt="" style="height: 250px; width: auto; margin-right: 10px;">
+    </a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/home">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/recommend">Recommendations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/youbuteAPI">CONTENTS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/googlebook">MORE BOOKS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/wishlist">WISHLIST</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/user_account">ACCOUNT</a>
+            </li>
+        </ul>
+        <div class="animation start-home"></div>
+    </div>
+</nav>
+</body>
+</html>

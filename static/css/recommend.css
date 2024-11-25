@@ -1,0 +1,146 @@
+body {
+    background: white;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.text-white {
+    color: #333;
+}
+
+.container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto; /* Centers the container */
+    padding: 20px;
+}
+
+.card {
+    background: linear-gradient(to right, #e9fbfc, #f9fbfd); /* Subtle gradient background */
+    border: 1px solid #9d9494;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ensures the content does not flow outside the border */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px; /* Space between cards */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Slight hover animation */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    width: 100%; /* Full width */
+    height: auto; /* Maintain aspect ratio */
+    border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+    padding: 20px;
+    text-align: center; /* Center text */
+}
+
+/* Input and Button Styling */
+input[type="text"], input[type="submit"] {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    display: block; /* Takes full width of its parent */
+    width: 100%;
+    transition: box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+    box-shadow: 0 0 5px rgba(33, 131, 184, 0.4); /* Blue shadow on focus */
+    border-color: #2183b8;
+}
+
+input[type="submit"] {
+    background-color: #205081; /* Dark blue background */
+    color: white;
+    cursor: pointer;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(32, 80, 129, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #1d4567; /* Slightly darker blue on hover */
+    box-shadow: 0 6px 12px rgba(32, 80, 129, 0.3);
+}
+
+/* Autocomplete Suggestions */
+.autocomplete-suggestions {
+    background-color: #ffffff;
+    color: #333;
+    position: absolute;
+    z-index: 9999;
+    width: 90%; /* Full width under the input */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* Rounded corners */
+}
+
+.autocomplete-suggestion {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee; /* Slight border for each suggestion */
+    transition: background-color 0.3s ease;
+}
+
+.autocomplete-suggestion:last-child {
+    border-bottom: none; /* No border for the last suggestion */
+}
+
+.autocomplete-suggestion:hover {
+    background-color: #e4e1e1; /* Light gray background on hover */
+}
+
+/* Responsive Grid */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Space between columns */
+}
+
+.col-md-3 {
+    width: 23%; /* Less than 25% for spacing */
+    margin-bottom: 20px; /* Space below each card */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .col-md-3 {
+        width: 48%; /* Two columns on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .col-md-3 {
+        width: 100%; /* One column on extra small screens */
+    }
+}
+
+/* Load More Button Styling */
+.load-more {
+    display: block;
+    width: 200px;
+    margin: 30px auto;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #6a11cb;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(106, 17, 203, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.load-more:hover {
+    background-color: #4f67ff;
+    box-shadow: 0 6px 15px rgba(106, 17, 203, 0.4);
+}

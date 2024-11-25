@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookMate</title>
+
+    <!-- Link to CSS files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+
+</head>
+
+<body>
+
+    <!-- Include the Navbar -->
+    {% include 'navbar.html' %}
+
+    <!-- Header Section with Glass Effect -->
+    <section class="header-section">
+        <div class="glass-effect">
+            <h1 class="header-title">Welcome to BOOKMATE!</h1>
+            <p class="header-subtitle">Discover your next favourite book with personalized recommendations and a curated selection.</p>
+            <a href="{{ url_for('recommend_ui') }}" class="header-button">Start Exploring</a>
+        </div>
+    </section>
+    
+    <!-- Horizontal line -->
+    <hr class="header-line">
+
+    <!-- Cards Section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center section-title">TOP RATED</h2>
+            </div>
+
+            <div class="row" id="book-container">
+                <!-- Initially display only 8 books -->
+                {% for i in range(8) %}
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="card">
+                        <img class="card-img-top" src="{{ image[i] }}" alt="Book Image">
+                        <div class="card-body">
+                            <h4 class="text-white">{{ book_name[i] }}</h4>
+                            <p class="text-white">{{ author[i] }}</p>
+                            <p class="text-white">Votes - {{ votes[i] }}</p>
+                            <p class="text-white">Rating - {{ rating[i] }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Load More Button -->
+            <button class="load-more" id="load-more">Load More</button>
+        </div>
+    </div>
+
+    <!-- About Us Section -->
+    <div class="container">
+        <hr class="header-line">
+        <div class="row about-section">
+            <div class="col-md-12">
+                <h2 class="text-center section-title">About BookMate</h2>
+                <p class="about-description text-center">
+                    BookMate is a platform designed to help book lovers explore and discover their next great read. 
+                    Whether you're searching for the latest bestseller or looking for hidden gems, 
+                    our curated recommendations ensure that you always find something amazing. 
+                    With personalized suggestions, user reviews, and comprehensive book information, 
+                    BookMate makes your reading experience better than ever. 
+                </p>
+                <p class="about-description text-center">
+                    Our mission is to bring readers closer to their next favorite book and authors closer to their audience. 
+                    Join us on a journey through the vast world of literature, where every book has a story to tell.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to load more books -->
+    <script>
+        let currentIndex = 8; // Start at the 9th book
+    
+        // Use the safe filter and wrap the Jinja template tags with JSON.stringify() to ensure correct formatting
+        const bookName = JSON.parse('{{ book_name | tojson | safe }}');
+        const author = JSON.parse('{{ author | tojson | safe }}');
+        const image = JSON.parse('{{ image | tojson | safe }}');
+        const votes = JSON.parse('{{ votes | tojson | safe }}');
+        const rating = JSON.parse('{{ rating | tojson | safe }}');
+    
+        const loadMoreButton = document.getElementById('load-more');
+        const bookContainer = document.getElementById('book-container');
+    
+        loadMoreButton.addEventListener('click', function () {
+            let limit = currentIndex + 8; // Load next 8 books
+    
+            for (let i = currentIndex; i < limit && i < bookName.length; i++) {
+                let bookCard = `
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="card">
+                            <img class="card-img-top" src="${image[i]}" alt="Book Image">
+                            <div class="card-body">
+                                <h4 class="text-white">${bookName[i]}</h4>
+                                <p class="text-white">${author[i]}</p>
+                                <p class="text-white">Votes - ${votes[i]}</p>
+                                <p class="text-white">Rating - ${rating[i]}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                bookContainer.insertAdjacentHTML('beforeend', bookCard);
+            }
+    
+            currentIndex = limit;
+            if (currentIndex >= bookName.length) {
+                loadMoreButton.style.display = 'none'; // Hide button after all books are loaded
+            }
+        });
+    </script>
+    
+</body>
+</html>

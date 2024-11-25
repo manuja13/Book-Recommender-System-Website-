@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book-Related Content</title>
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/youbuteAPI.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Include the Navbar -->
+    {% include 'navbar.html' %}
+
+    <h1>Explore Book-Related Content</h1>
+    
+    <center><div class="content-container">
+        <!-- Dropdown to select the type of content -->
+        <label for="content-type">Select Content Type:</label>
+        <select id="content-type">
+            <option value="author interview">Author Interviews</option>
+            <option value="podcast">Podcasts</option>
+            <option value="trailer">Trailers for Book Adaptations</option>
+            <option value="audiobook">Audiobooks</option>
+        </select>
+        
+        <!-- Input for the user to enter the book or author name -->
+        <div style="position: relative;">
+            <input type="text" id="search-query" placeholder="Enter book or author name" autocomplete="off" />
+            <div id="autocomplete-suggestions" class="autocomplete-suggestions"></div>
+        </div>
+
+        <button id="fetch-videos">Search</button>
+        
+        <div id="videos"></div>
+    </div></center>
+
+    <script>
+        const apiKey = 'AIzaSyCUfuHjHbBWDZDF5Xq3Wy-UGikQOjUZ02Q'; // Replace with your YouTube API key
+
+        // Function to fetch suggestions (this would normally call your backend)
+        async function fetchBookSuggestions(query) {
+            const response = await fetch(`/autocomplete?q=${query}`);
+            const suggestions = await response.json();
+            return suggestions;
+        }
+
+        // Event listener for the search query input (autocomplete)
+        document.getElementById('search-query').addEventListener('input', async (e) => {
+            const query = e.target.value;
+
+            if (query.length < 2) {
+                document.getElementById('autocomplete-suggestions').innerHTML = '';
+                return;
+            }
+
+            const suggestions = await fetchBookSuggestions(query);
+
+            const suggestionBox = document.getElementById('autocomplete-suggestions');
+            suggestionBox.innerHTML = ''; // Clear existing suggestions
+
+            suggestions.forEach(suggestion => {
+                const div = document.createElement('div');
+                div.textContent = suggestion;
+                div.addEventListener('click', () => {
+                    document.getElementById('search-query').value = suggestion;
+                    suggestionBox.innerHTML = ''; // Clear the suggestions after selection
+                });
+                suggestionBox.appendChild(div);
+            });
+        });
+
+        // YouTube API search
+        document.getElementById('fetch-videos').addEventListener('click', () => {
+            const searchQuery = document.getElementById('search-query').value;
+            const contentType = document.getElementById('content-type').value;
+
+            // Create the search query based on the selected content type
+            let query = '';
+            if (contentType === 'author interview') {
+                query = `author interview ${searchQuery}`;
+            } else if (contentType === 'podcast') {
+                query = `podcast ${searchQuery}`;
+            } else if (contentType === 'trailer') {
+                query = `${searchQuery} movie trailer`;
+            } else if (contentType === 'audiobook') {
+                query = `${searchQuery} audiobook`;
+            }
+
+            const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&type=video&key=${apiKey}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    let html = '';
+                    data.items.forEach(item => {
+                        const videoId = item.id.videoId;
+                        const videoTitle = item.snippet.title;
+                        const videoThumbnail = item.snippet.thumbnails.default.url;
+
+                        html += `
+                            <div class="clearfix">
+                                <img src="${videoThumbnail}" alt="${videoTitle}">
+                                <h3>${videoTitle}</h3>
+                                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">Watch Video</a>
+                            </div>
+                        `;
+                    });
+                    document.getElementById('videos').innerHTML = html;
+                })
+                .catch(error => console.error('Error fetching YouTube videos:', error));
+        });
+    </script>
+</body>
+</html>
